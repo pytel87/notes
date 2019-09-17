@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.pytel.notes"
+        minSdkVersion Versions.compileSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Libraries.kotlin
+    implementation Libraries.coroutinesCore
+    implementation Libraries.coroutinesAndroid
+    implementation SupportLibraries.appcompat
+    implementation Libraries.ktx
+    implementation Libraries.retrofit
+    implementation Libraries.koinAndroid
+    implementation Libraries.koinViewModel
+    implementation Libraries.loggingInterceptor
+    implementation Libraries.moshiConverter
+    implementation Libraries.timber
+    implementation Libraries.navigationFragment
+    implementation Libraries.navigationUi
+    implementation Libraries.constraintLayout
+    implementation Libraries.viewModelKtx
+    implementation Libraries.glide
+    kapt(Libraries.roomCompiler)
+    implementation(Libraries.roomRuntime)
+    implementation(Libraries.roomKtx)
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+}
