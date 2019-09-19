@@ -52,7 +52,7 @@ object Versions {
     val rxpaper = "1.4.0"
     val paperdb = "2.6"
     val moshi = "1.8.0"
-    val lifecycle = "2.1.0-alpha04"
+    val lifecycle = "2.1.0-alpha01"
     val leakCanary = "2.0-alpha-2"
     val crashlytics = "2.10.1"
     val koin = "2.0.0-beta-1"
@@ -63,6 +63,8 @@ object Versions {
     val assertjCore = "3.12.2"
     val mockitoKotlin = "2.1.0"
     val mockitoInline = "3.0.0"
+    val coroutinesTest = "1.3.1"
+
 }
 
 object Libraries {
@@ -137,4 +139,6 @@ object TestLibraries {
     val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
     val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoInline}"
     val lifecycleTesting = "androidx.arch.core:core-testing:${Versions.lifecycle}"
+    val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesTest}"
+
 }

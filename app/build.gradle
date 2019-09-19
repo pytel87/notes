@@ -24,9 +24,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
+    testImplementation TestLibraries.junit
+    testImplementation TestLibraries.mockitoKotlin
+    testImplementation TestLibraries.mockitoInline
+    testImplementation TestLibraries.coroutinesTest
+    testImplementation TestLibraries.lifecycleTesting
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Libraries.kotlin
     implementation Libraries.coroutinesCore

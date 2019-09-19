@@ -5,12 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.pytel.notes.domain.common.Result
 import com.pytel.notes.domain.usecase.NotesUseCase
 import com.pytel.notes.framework.base.BaseViewModel
+import com.pytel.notes.framework.base.CoroutineContextProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class NotesViewModel(private val notesUseCase: NotesUseCase) : BaseViewModel() {
+class NotesViewModel(private val notesUseCase: NotesUseCase, private val contextProvider: CoroutineContextProvider ) : BaseViewModel() {
 
     val viewState = MutableLiveData<NotesStates>()
 
@@ -25,7 +26,7 @@ class NotesViewModel(private val notesUseCase: NotesUseCase) : BaseViewModel() {
     fun loadNotes() {
         viewState.value = NotesStates.Loading
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
+            val result = withContext(contextProvider.IO) {
                 notesUseCase.getAllNotes()
             }
             when (result) {

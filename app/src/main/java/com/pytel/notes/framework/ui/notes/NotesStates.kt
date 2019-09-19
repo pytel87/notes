@@ -9,9 +9,9 @@ sealed class NotesStates(val showLoading: Boolean) {
 
     object Loading : NotesStates(showLoading = true)
 
-    class NotesLoaded(val notes: List<Note>) : NotesStates(showLoading = false)
+    data class NotesLoaded(val notes: List<Note>) : NotesStates(showLoading = false)
 
-    class NotesError(val error: ErrorResult) : NotesStates(showLoading = false)
+    data class NotesError(val error: ErrorResult) : NotesStates(showLoading = false)
 
     object Invalid : NotesStates(showLoading = false)
 

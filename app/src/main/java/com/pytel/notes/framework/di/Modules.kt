@@ -8,6 +8,7 @@ import com.pytel.notes.data.manager.NotesManagerImpl
 import com.pytel.notes.domain.manager.NotesManager
 import com.pytel.notes.domain.usecase.NoteUseCase
 import com.pytel.notes.domain.usecase.NotesUseCase
+import com.pytel.notes.framework.base.CoroutineContextProvider
 import com.pytel.notes.framework.data.dao.NotesDatabase
 import com.pytel.notes.framework.data.local.NotesLocalDataSourceImpl
 import com.pytel.notes.framework.data.local.NotesMemoryCacheImpl
@@ -44,6 +45,7 @@ val appModule = module {
     single<NotesManager> { NotesManagerImpl(notesCache = get(),notesRemoteDataSource = get(),notesLocalDataSource = get()) }
     single<ImageLoader> {GlideImageLoader(context = get())}
     single<NotesCache> {NotesMemoryCacheImpl()}
+    single<NotesCache> {NotesMemoryCacheImpl()}
 
 
 }
@@ -63,7 +65,7 @@ val useCaseModule: Module = module {
 }
 
 val viewModelModule: Module = module {
-    viewModel { NotesViewModel(notesUseCase = get()) }
+    viewModel { NotesViewModel(notesUseCase = get(),contextProvider = CoroutineContextProvider()) }
     viewModel { NoteViewModel(noteUseCase = get()) }
 }
 
