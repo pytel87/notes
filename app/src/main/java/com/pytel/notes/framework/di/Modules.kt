@@ -45,8 +45,6 @@ val appModule = module {
     single<NotesManager> { NotesManagerImpl(notesCache = get(),notesRemoteDataSource = get(),notesLocalDataSource = get()) }
     single<ImageLoader> {GlideImageLoader(context = get())}
     single<NotesCache> {NotesMemoryCacheImpl()}
-    single<NotesCache> {NotesMemoryCacheImpl()}
-
 
 }
 
