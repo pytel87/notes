@@ -28,7 +28,8 @@ data class ErrorCodeResult(val code: ErrorCode,
 
 enum class ErrorCode(val value: Int) {
 
-    NO_ERROR(0)
+    NO_ERROR(0),
+    NO_NOTES_IN_CACHE(1)
 
 }
 

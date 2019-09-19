@@ -10,7 +10,7 @@ interface NotesRemoteDataSource {
 
     suspend fun getAll(): Result<List<Note>>
 
-    suspend fun update(note:Note): Result<Boolean>
+    suspend fun update(noteId:Int, title:String): Result<Note>
 
     suspend fun delete(noteId:Int): Result<Boolean>
 

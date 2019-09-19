@@ -14,16 +14,4 @@ class  NotesUseCase(private val notesManager: NotesManager) {
         return notesManager.getAll()
     }
 
-    suspend fun createNote(title:String):Result<Note>{
-        return notesManager.create(title)
-    }
-
-    suspend fun deleteNote(noteId:Int):Result<Boolean>{
-        return notesManager.delete(noteId)
-    }
-
-    suspend fun updateNote(note:Note):Result<Boolean>{
-        return notesManager.update(note)
-    }
-
 }

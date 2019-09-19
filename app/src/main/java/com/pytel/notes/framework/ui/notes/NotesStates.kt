@@ -11,7 +11,7 @@ sealed class NotesStates(val showLoading: Boolean) {
 
     class NotesLoaded(val notes: List<Note>) : NotesStates(showLoading = false)
 
-    class LoadingError(val error: ErrorResult) : NotesStates(showLoading = false)
+    class NotesError(val error: ErrorResult) : NotesStates(showLoading = false)
 
     object Invalid : NotesStates(showLoading = false)
 

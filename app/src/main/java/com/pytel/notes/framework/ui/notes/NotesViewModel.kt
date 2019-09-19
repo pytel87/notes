@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 
 
 class NotesViewModel(private val notesUseCase: NotesUseCase) : BaseViewModel() {
+
     val viewState = MutableLiveData<NotesStates>()
 
     init {
@@ -32,7 +33,7 @@ class NotesViewModel(private val notesUseCase: NotesUseCase) : BaseViewModel() {
                     viewState.value = NotesStates.NotesLoaded(result.data)
                 }
                 is Result.Error -> {
-                    viewState.value = NotesStates.LoadingError(result.error)
+                    viewState.value = NotesStates.NotesError(result.error)
                 }
             }
         }

@@ -32,6 +32,7 @@ dependencies {
     implementation Libraries.coroutinesCore
     implementation Libraries.coroutinesAndroid
     implementation SupportLibraries.appcompat
+    implementation SupportLibraries.cardview
     implementation Libraries.ktx
     implementation Libraries.retrofit
     implementation Libraries.koinAndroid

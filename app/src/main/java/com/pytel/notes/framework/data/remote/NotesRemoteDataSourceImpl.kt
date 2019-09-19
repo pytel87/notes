@@ -4,13 +4,16 @@ import com.pytel.notes.data.datasource.NotesRemoteDataSource
 import com.pytel.notes.domain.common.ApiErrorResult
 import com.pytel.notes.domain.common.ErrorResult
 import com.pytel.notes.domain.common.Result
+import com.pytel.notes.domain.common.callSafe
 import com.pytel.notes.domain.model.Note
 import com.pytel.notes.framework.utils.logError
 import retrofit2.awaitResponse
 import java.io.IOException
 
 class NotesRemoteDataSourceImpl(private val notesApi: NotesApi) : NotesRemoteDataSource {
-    override suspend fun getAll(): Result<List<Note>> {
+    override suspend fun getAll(): Result<List<Note>> = callSafe({fetchAll()}, "Can't get notes")
+
+    private suspend fun fetchAll(): Result<List<Note>> {
         val response = notesApi.getAll().awaitResponse()
         return if (response.isSuccessful) {
             val body = response.body()
@@ -26,10 +29,22 @@ class NotesRemoteDataSourceImpl(private val notesApi: NotesApi) : NotesRemoteDat
         }
     }
 
-    override suspend fun update(note: Note): Result<Boolean> {
-        val response = notesApi.update(note.id,note.title).awaitResponse()
+    override suspend fun update(noteId: Int, title:String): Result<Note> = callSafe({updateNote(noteId, title)},"Can't update note")
+
+    private suspend fun updateNote(noteId:Int,title: String):Result<Note>{
+        val response = notesApi.update(noteId,title).awaitResponse()
         return if (response.isSuccessful) {
-            Result.Success(data = true)
+            val body = response.body()
+            body?.let {
+                Result.Success(data = body.mapToDomain())
+            } ?: run {
+                Result.Error(
+                    ErrorResult(
+                        response.message(),
+                        IOException("Error empty body")
+                    )
+                )
+            }
         } else {
             val errorResult = ApiErrorResult(code = response.code(), errorMessage = response.message())
             logError { "Error update [$errorResult]" }
@@ -37,7 +52,9 @@ class NotesRemoteDataSourceImpl(private val notesApi: NotesApi) : NotesRemoteDat
         }
     }
 
-    override suspend fun delete(noteId: Int): Result<Boolean> {
+    override suspend fun delete(noteId: Int): Result<Boolean> = callSafe({deleteNote(noteId)},"Can't delete note")
+
+    private suspend fun deleteNote(noteId:Int):Result<Boolean> {
         val response = notesApi.delete(noteId).awaitResponse()
         return if (response.isSuccessful) {
             Result.Success(data = true)
@@ -48,7 +65,9 @@ class NotesRemoteDataSourceImpl(private val notesApi: NotesApi) : NotesRemoteDat
         }
     }
 
-    override suspend fun create(title: String): Result<Note> {
+    override suspend fun create(title: String): Result<Note> = callSafe({createNote(title)},"Can't create note")
+
+    private suspend fun createNote(title:String) :Result<Note>{
         val response = notesApi.create(title).awaitResponse()
         return if (response.isSuccessful) {
             val body = response.body()
@@ -69,7 +88,9 @@ class NotesRemoteDataSourceImpl(private val notesApi: NotesApi) : NotesRemoteDat
         }
     }
 
-    override suspend fun get(noteId: Int): Result<Note> {
+    override suspend fun get(noteId: Int): Result<Note> = callSafe({getNote(noteId)},"Can't get note")
+
+    private suspend fun getNote(noteId: Int):Result<Note>{
         val response = notesApi.get(noteId).awaitResponse()
         return if (response.isSuccessful) {
             val body = response.body()

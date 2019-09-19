@@ -8,12 +8,16 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.pytel.notes.R
 import com.pytel.notes.domain.common.ErrorResult
 import com.pytel.notes.domain.model.Note
+import com.pytel.notes.framework.ui.note.NoteStates
+import com.pytel.notes.framework.utils.Const
 import com.pytel.notes.framework.utils.isLandscape
 import com.pytel.notes.framework.utils.logDebug
 import kotlinx.android.synthetic.main.fragment_notes.*
@@ -26,6 +30,11 @@ class NotesFragment : Fragment() {
 
     private lateinit var notesAdapter: NotesAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(false)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_notes, container, false)
         registerEvents()
@@ -37,14 +46,23 @@ class NotesFragment : Fragment() {
 
         notesAdapter = NotesAdapter( { onNoteSelectedEvent(it) })
         recycler.apply {
-            layoutManager = activity?.let { GridLayoutManager(it, getSpanCount()) }
+            layoutManager = activity?.let { StaggeredGridLayoutManager(getSpanCount(), LinearLayoutManager.VERTICAL) }
             adapter = notesAdapter
+        }
+
+        noteContainer.setOnClickListener{
+            val extras = FragmentNavigatorExtras(
+                note to "title"
+            )
+            findNavController().navigate(R.id.action_notesFragment_to_noteFragment, null, null, extras)
         }
 
     }
 
     private fun onNoteSelectedEvent(note: Note) {
         logDebug ("Selected note with id: ${note.id}")
+        val bundle = bundleOf(Const.SELECTED_NOTE_ID to note.id)
+        findNavController().navigate(R.id.action_notesFragment_to_noteFragment, bundle)
     }
 
     override fun onDestroyView() {
@@ -61,7 +79,7 @@ class NotesFragment : Fragment() {
                 is NotesStates.NotInitialized -> viewModel.loadNotes()
                 is NotesStates.Loading -> logDebug ("Loading notes ...")
                 is NotesStates.NotesLoaded-> showLoadedNotes(it.notes)
-                is NotesStates.LoadingError -> showError(it.error)
+                is NotesStates.NotesError -> showError(it.error)
             }
         })
     }
