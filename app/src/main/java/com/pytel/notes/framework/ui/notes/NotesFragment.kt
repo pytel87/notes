@@ -55,6 +55,12 @@ class NotesFragment : Fragment() {
                 note to "title"
             )
             findNavController().navigate(R.id.action_notesFragment_to_noteFragment, null, null, extras)
+            viewModel.invalidate()
+        }
+
+        swipeRefresh.setOnRefreshListener {
+            viewModel.loadNotes()
+            swipeRefresh.isRefreshing = false
         }
 
     }
@@ -63,6 +69,7 @@ class NotesFragment : Fragment() {
         logDebug ("Selected note with id: ${note.id}")
         val bundle = bundleOf(Const.SELECTED_NOTE_ID to note.id)
         findNavController().navigate(R.id.action_notesFragment_to_noteFragment, bundle)
+        viewModel.invalidate()
     }
 
     override fun onDestroyView() {
@@ -73,6 +80,7 @@ class NotesFragment : Fragment() {
     private fun registerEvents() {
         viewModel.viewState.observe(this, Observer {
             showLoading(it.showLoading)
+
             showError(null)
             logDebug("Notes state observed: ${it.javaClass.simpleName}")
             when (it) {

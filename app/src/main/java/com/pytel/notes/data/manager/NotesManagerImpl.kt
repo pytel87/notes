@@ -22,7 +22,11 @@ class NotesManagerImpl(val notesRemoteDataSource: NotesRemoteDataSource, val not
     }
 
     override suspend fun create(title: String): Result<Note> {
-        return notesRemoteDataSource.create(title)
+        val result = notesRemoteDataSource.create(title)
+        if (result is Result.Success){
+            notesCache.save(result.data)
+        }
+        return result
     }
 
     override suspend fun get(noteId: Int): Result<Note> {
