@@ -27,11 +27,12 @@ object Versions {
 
 
     val googleServices = "4.3.0"
+    val firebaseAnalytics = "17.2.0"
 
     val firebaseAuth = "16.0.4"
     val firebaseCore = "16.0.4"
 
-    val fabric = "1.30.0"
+    val fabric = "1.31.0"
 
     val appCompat = "1.0.2"
     val design = "1.0.0"
@@ -126,11 +127,13 @@ object SupportLibraries {
 object GoogleLibraries {
     val auth = "com.google.android.gms:play-services-auth:${Versions.googleAuth}"
     val playCore = "com.google.android.play:core:${Versions.playCore}"
+
 }
 
 object FirebaseLibraries {
     val auth = "com.google.firebase:firebase-auth:${Versions.firebaseAuth}"
     val core = "com.google.firebase:firebase-core:${Versions.firebaseCore}"
+    val analytics = "com.google.firebase:firebase-analytics:${Versions.firebaseAnalytics}"
 }
 
 object TestLibraries {

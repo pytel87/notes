@@ -8,6 +8,10 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'io.fabric'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -54,7 +58,9 @@ dependencies {
     implementation Libraries.navigationUi
     implementation Libraries.constraintLayout
     implementation Libraries.viewModelKtx
+    implementation Libraries.crashlytics
     implementation Libraries.glide
+    implementation FirebaseLibraries.analytics
     kapt(Libraries.roomCompiler)
     implementation(Libraries.roomRuntime)
     implementation(Libraries.roomKtx)

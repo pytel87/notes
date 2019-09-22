@@ -3,12 +3,9 @@ package com.pytel.notes.framework.ui.note
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-
 import androidx.transition.TransitionInflater
-
 import com.pytel.notes.domain.common.ErrorResult
 import com.pytel.notes.domain.model.Note
 import com.pytel.notes.framework.utils.*
@@ -16,12 +13,15 @@ import kotlinx.android.synthetic.main.fragment_note.*
 import kotlinx.android.synthetic.main.fragment_notes.progress
 import org.koin.androidx.viewmodel.ext.viewModel
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import android.widget.EditText
 import com.pytel.notes.R
+import com.pytel.notes.framework.base.BaseFragment
 
 
-class NoteFragment : Fragment() {
+class NoteFragment : BaseFragment() {
+
+    companion object {
+        const val TAG = "NotesFragment"
+    }
 
     private val viewModel by viewModel<NoteViewModel>()
 
@@ -44,6 +44,7 @@ class NoteFragment : Fragment() {
             if(actionId == EditorInfo.IME_ACTION_DONE){
                 hideKeyboard()
                 findNavController().navigateUp()
+                logEvent("NoteDone")
                 true
             } else {
                 false
@@ -70,6 +71,7 @@ class NoteFragment : Fragment() {
         return when (item?.itemId) {
             R.id.action_delete -> {
                 viewModel.deleteNote(noteId)
+                logEvent("NoteDelete")
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -84,12 +86,21 @@ class NoteFragment : Fragment() {
             showError(null)
             logDebug("Notes state observed: ${it.javaClass.simpleName}")
             when (it) {
-                is NoteStates.NotInitialized -> loadOrCreateEmptyNote()
+                is NoteStates.NotInitialized -> {
+                    logScreen(TAG)
+                    loadOrCreateEmptyNote()
+                }
                 is NoteStates.Loading -> logDebug ("Loading note ...")
-                is NoteStates.NoteCreated-> onNoteCreated(it.note)
+                is NoteStates.NoteCreated-> {
+                    logEvent("NoteCreated")
+                    onNoteCreated(it.note)
+                }
                 is NoteStates.NoteLoaded-> onNoteLoaded(it.note)
                 is NoteStates.NoteError -> showError(it.error)
-                is NoteStates.NoteDeleted -> findNavController().navigateUp()
+                is NoteStates.NoteDeleted -> {
+                    logEvent("NoteDeleted")
+                    findNavController().navigateUp()
+                }
             }
         })
     }
@@ -108,7 +119,7 @@ class NoteFragment : Fragment() {
 
     private fun onNoteLoaded(note:Note){
         mapNoteToUI(note)
-        title.setSelection(title.text.length);
+        title.setSelection(title.text.length)
         showSoftKeyboard(title)
     }
 
@@ -129,7 +140,7 @@ class NoteFragment : Fragment() {
         val message = "Something went wrong: ${error.message}"
         logDebug(message)
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-
+        logError(TAG,error.message)
     }
 
     override fun onDestroyView() {

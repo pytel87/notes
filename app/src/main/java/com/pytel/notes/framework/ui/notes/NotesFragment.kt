@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.pytel.notes.R
 import com.pytel.notes.domain.common.ErrorResult
 import com.pytel.notes.domain.model.Note
+import com.pytel.notes.framework.base.BaseFragment
 import com.pytel.notes.framework.ui.note.NoteStates
 import com.pytel.notes.framework.utils.Const
 import com.pytel.notes.framework.utils.isLandscape
@@ -24,7 +25,11 @@ import kotlinx.android.synthetic.main.fragment_notes.*
 import org.koin.androidx.viewmodel.ext.viewModel
 
 
-class NotesFragment : Fragment() {
+class NotesFragment : BaseFragment() {
+
+    companion object {
+        const val TAG = "NotesFragment"
+    }
 
     private val viewModel by viewModel<NotesViewModel>()
 
@@ -56,11 +61,13 @@ class NotesFragment : Fragment() {
             )
             findNavController().navigate(R.id.action_notesFragment_to_noteFragment, null, null, extras)
             viewModel.invalidate()
+            logEvent("NoteCreate")
         }
 
         swipeRefresh.setOnRefreshListener {
             viewModel.loadNotes()
             swipeRefresh.isRefreshing = false
+            logEvent("NotesRefresh")
         }
 
     }
@@ -70,6 +77,8 @@ class NotesFragment : Fragment() {
         val bundle = bundleOf(Const.SELECTED_NOTE_ID to note.id)
         findNavController().navigate(R.id.action_notesFragment_to_noteFragment, bundle)
         viewModel.invalidate()
+
+        logEvent("NoteSelected")
     }
 
     override fun onDestroyView() {
@@ -84,7 +93,10 @@ class NotesFragment : Fragment() {
             showError(null)
             logDebug("Notes state observed: ${it.javaClass.simpleName}")
             when (it) {
-                is NotesStates.NotInitialized -> viewModel.loadNotes()
+                is NotesStates.NotInitialized -> {
+                    logScreen(TAG)
+                    viewModel.loadNotes()
+                }
                 is NotesStates.Loading -> logDebug ("Loading notes ...")
                 is NotesStates.NotesLoaded-> showLoadedNotes(it.notes)
                 is NotesStates.NotesError -> showError(it.error)
@@ -114,6 +126,7 @@ class NotesFragment : Fragment() {
         val message = "Something went wrong: ${error.message}"
         logDebug(message)
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        logError(TAG, error.message)
 
     }
 
