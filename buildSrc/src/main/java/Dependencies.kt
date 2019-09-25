@@ -23,7 +23,7 @@ object Versions {
     val googleAuth = "16.0.1"
 
     val navigationComponent = "2.0.0"
-    val constraintLayout = "1.1.2"
+    val constraintLayout = "2.0.0-alpha4"
 
 
     val googleServices = "4.3.0"
