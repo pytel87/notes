@@ -17,7 +17,7 @@ open class BaseActivity: AppCompatActivity() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     }
 
-    fun logEvent(event:String, category:String = "Action"){
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, null)
+    fun logEvent(event:String){
+        firebaseAnalytics.logEvent(event, null)
     }
 }

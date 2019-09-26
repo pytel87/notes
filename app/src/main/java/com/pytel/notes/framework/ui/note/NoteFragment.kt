@@ -40,7 +40,7 @@ class NoteFragment : BaseFragment() {
 
 
 
-        title.setOnEditorActionListener { v, actionId, event ->
+        title.setOnEditorActionListener { _, actionId, _->
             if(actionId == EditorInfo.IME_ACTION_DONE){
                 hideKeyboard()
                 findNavController().navigateUp()

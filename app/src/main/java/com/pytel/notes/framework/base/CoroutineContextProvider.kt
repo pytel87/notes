@@ -1,6 +1,7 @@
 package com.pytel.notes.framework.base
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -12,6 +13,7 @@ open class  CoroutineContextProvider {
     open val IO:  CoroutineContext by lazy { Dispatchers.IO }
 }
 
+@ExperimentalCoroutinesApi
 class TestContextProvider:CoroutineContextProvider(){
     override val Main: CoroutineContext = Dispatchers.Unconfined
     override val IO: CoroutineContext = Dispatchers.Unconfined

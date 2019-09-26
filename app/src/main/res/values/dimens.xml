@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="f_notes_create_text_size">16sp</dimen>
+
+    <dimen name="base_dp">16dp</dimen>
+    <dimen name="f_notes_create_height">64dp</dimen>
+    <dimen name="base_elevation">8dp</dimen>
+    <dimen name="f_notes_recycler_top_bottom_dp">8dp</dimen>
+    <dimen name="f_notes_recycler_side_dp">8dp</dimen>
+</resources>

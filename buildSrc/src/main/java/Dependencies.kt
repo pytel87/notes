@@ -26,7 +26,7 @@ object Versions {
     val constraintLayout = "2.0.0-alpha4"
 
 
-    val googleServices = "4.3.0"
+    val googleServices = "4.2.0"
     val firebaseAnalytics = "17.2.0"
 
     val firebaseAuth = "16.0.4"

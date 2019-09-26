@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#03a9f4</color>
     <color name="white">#ffffff</color>
+    <color name="f_notes_create_background">#fafafa</color>
 </resources>
