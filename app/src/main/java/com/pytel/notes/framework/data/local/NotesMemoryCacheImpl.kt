@@ -1,7 +1,7 @@
 package com.pytel.notes.framework.data.local
 
-import com.pytel.notes.data.datasource.NotesCache
-import com.pytel.notes.domain.model.Note
+import com.pytel.core.data.datasource.NotesCache
+import com.pytel.core.domain.model.Note
 
 class NotesMemoryCacheImpl : NotesCache {
     override suspend fun remove(noteId: Int) {

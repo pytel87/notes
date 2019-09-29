@@ -1,6 +1,6 @@
 package com.pytel.notes.framework.data.remote
 
-import com.pytel.notes.data.model.NoteDto
+import com.pytel.core.data.model.NoteDto
 import retrofit2.Call
 import retrofit2.http.*
 

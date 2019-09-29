@@ -6,7 +6,7 @@
                                                    android:clipToPadding="false"
                                                    android:background="@color/white"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".framework.ui.notes.NotesFragment">
+                                                   tools:context=".ui.notes.NotesFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"

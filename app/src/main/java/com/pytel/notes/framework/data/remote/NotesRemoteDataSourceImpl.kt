@@ -1,11 +1,11 @@
 package com.pytel.notes.framework.data.remote
 
-import com.pytel.notes.data.datasource.NotesRemoteDataSource
-import com.pytel.notes.domain.common.ApiErrorResult
-import com.pytel.notes.domain.common.ErrorResult
-import com.pytel.notes.domain.common.Result
-import com.pytel.notes.domain.common.callSafe
-import com.pytel.notes.domain.model.Note
+import com.pytel.core.data.datasource.NotesRemoteDataSource
+import com.pytel.core.domain.common.ApiErrorResult
+import com.pytel.core.domain.common.ErrorResult
+import com.pytel.core.domain.common.Result
+import com.pytel.core.domain.common.callSafe
+import com.pytel.core.domain.model.Note
 import com.pytel.notes.framework.utils.logError
 import retrofit2.awaitResponse
 import java.io.IOException

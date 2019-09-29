@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     testImplementation TestLibraries.junit
     testImplementation TestLibraries.mockitoKotlin
     testImplementation TestLibraries.mockitoInline

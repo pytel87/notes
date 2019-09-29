@@ -1,12 +1,11 @@
 package com.pytel.notes.framework.data.local
 
-import com.pytel.notes.data.datasource.NotesCache
-import com.pytel.notes.data.datasource.NotesLocalDataSource
-import com.pytel.notes.domain.common.ErrorCode
-import com.pytel.notes.domain.common.ErrorCodeResult
-import com.pytel.notes.domain.common.Result
-import com.pytel.notes.domain.model.Note
-import com.pytel.notes.framework.data.dao.NotesDao
+import com.pytel.core.data.datasource.NotesCache
+import com.pytel.core.data.datasource.NotesLocalDataSource
+import com.pytel.core.domain.common.ErrorCode
+import com.pytel.core.domain.common.ErrorCodeResult
+import com.pytel.core.domain.common.Result
+import com.pytel.core.domain.model.Note
 
 /**
  * Created by Vladimir Skouy on 2019-09-17.

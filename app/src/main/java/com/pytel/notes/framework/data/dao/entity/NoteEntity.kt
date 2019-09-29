@@ -2,7 +2,7 @@ package com.pytel.notes.framework.data.dao.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pytel.notes.domain.model.Note
+import com.pytel.core.domain.model.Note
 
 @Entity(tableName = "note")
 data class NoteEntity(
